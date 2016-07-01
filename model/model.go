@@ -51,6 +51,9 @@ type RouterConfig struct {
 	EnforceWhitelists        bool        `key:"enforceWhitelists" constraint:"(?i)^(true|false)$"`
 	DefaultWhitelist         []string    `key:"defaultWhitelist" constraint:"^((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/([0-9]|[1-2][0-9]|3[0-2]))?(\\s*,\\s*)?)+$"`
 	WhitelistMode            string      `key:"whitelistMode" constraint:"^(extend|override)$"`
+	DefaultServiceIP         string      `key:"defaultServiceIP"`
+	DefaultAppName           string      `key:"defaultAppName"`
+	DefaultServiceEnabled    bool        `key:"defaultServiceEnabled" constraint:"(?i)^(true|false)$"`
 	SSLConfig                *SSLConfig  `key:"ssl"`
 	AppConfigs               []*AppConfig
 	BuilderConfig            *BuilderConfig
@@ -68,11 +71,15 @@ func newRouterConfig() *RouterConfig {
 		GzipConfig:               newGzipConfig(),
 		BodySize:                 "1m",
 		ProxyRealIPCIDRs:         []string{"10.0.0.0/8"},
+		DisableServerTokens:      false,
 		ErrorLogLevel:            "error",
 		UseProxyProtocol:         false,
 		EnforceWhitelists:        false,
 		WhitelistMode:            "extend",
 		SSLConfig:                newSSLConfig(),
+		DefaultServiceEnabled:    false,
+		DefaultAppName:           "",
+		DefaultServiceIP:         "",
 	}
 }
 
